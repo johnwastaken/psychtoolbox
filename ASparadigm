@@ -11,17 +11,15 @@ col.black = 0;
 col.white = 1;
 col.grey = .6;
 col.red    = [185/x 35/x 42/x];       %   18.1	.604	.337
-col.blue   = [0	103/x 145/x];       %	18.7	.189	.255
-col.orange = [154/x 74/x 20/x];     %   18.6    .553    .495
 col.green  = [0 112/x 0];       %   18.2	.290	.633
 col.gold   = [115/x 95/x 0];      %   18.3	.458	.495
 
 %timing
 fixationDuration = 1; %length of stage in seconds
-targDuration = 1;
+targDuration = 2;
 
-%trial types (n = trpercond x hemi x resp)
-trpercond =  8; %trials per condition
+%trial types (n = trpercond x targ x dist)
+trpercond =  4; %trials per condition
 targ = 3; %1=left, 2=right, 3=center
 dist = 2; %1=left, 2=right
 
@@ -40,7 +38,6 @@ if scrHz > 0
 else
     Screen('Preference', 'SkipSyncTests', 1);
 end
-
 [expWin,rect] = PsychImaging('OpenWindow', scrID, col.black);
 Screen('BlendFunction', expWin, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
@@ -59,15 +56,6 @@ stimRect = [0 0 1.7*ppd 1.7*ppd]; % Size of stimuli
 lineRect = [0 0 1*ppd .06*ppd; 0 0 .06*ppd 1*ppd];
 sizeCircle = 4.6*ppd; % Size of the circlar array
 circleWidth = .06*ppd;
-
-% %load images
-% load1Image = imread('Stim/load1.png', 'png');
-% load2Image = imread('Stim/load2.png', 'png');
-% load3Image = imread('Stim/load3.png', 'png');
-% 
-% load1Texture = Screen('MakeTexture', expWin, load1Image);
-% load2Texture = Screen('MakeTexture', expWin, load2Image);
-% load3Texture = Screen('MakeTexture', expWin, load3Image);
 
 %fixation cross info
 lineWidthPix = 2;
