@@ -50,7 +50,6 @@ ctrX = resVal(1)/2;
 ctrY = resVal(2)/2;
 
 %% Stimulus Setup
-
 %circle stimuli
 stimRect = [0 0 1.7*ppd 1.7*ppd]; % Size of stimuli
 lineRect = [0 0 1*ppd .06*ppd; 0 0 .06*ppd 1*ppd];
@@ -75,11 +74,6 @@ targFrames = round(targDuration / ifi);
 
 trmat=repmat(fullfact([targ dist]),trpercond,1) ; %make matrix
 mixtr=trmat(randperm(length(trmat)),:); %randomize order
-
-%% Setup output files
-
-% fileName =['Results/' baseName '_PDB_v1.txt'];
-% dataFile=fopen(fileName,'a+');
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% Start Experiment %%
@@ -173,7 +167,7 @@ for trial=1:length(mixtr)
     disp(['Distractor Location = ' num2str(distLoc)]);
     disp(['Line orientation = ' num2str(lineRecord{distLoc})]);
     disp([' ']);
-
+    
 end
 
 % Clear the screen
