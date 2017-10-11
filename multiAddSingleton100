@@ -5,7 +5,7 @@ clearvars;
 
 %% Modifiable variables
 
-%define colors
+%colors
 x= 255; % convert RGB values to percentage values
 col.black = 0;
 col.white = 1;
@@ -23,13 +23,14 @@ trpercond =  4; %trials per condition
 targ = 3; %1=left, 2=right, 3=center
 dist = 2; %1=left, 2=right
 
-%determine the stim number
+%stim locations
 numStim = 10;
 locLeft = [6 7 8 9];
 locRight = [1 2 3 4];
 locMid = [5 10];
 
 %% Screen setup
+
 PsychDefaultSetup(2);
 scrID = max(Screen('Screens'));
 scrHz = Screen('FrameRate',scrID);
@@ -49,9 +50,9 @@ ppd = round(pi * resVal(1) / atan(mon_width/v_dist/2) / 360);
 ctrX = resVal(1)/2;
 ctrY = resVal(2)/2;
 
-%% Stimulus Setup
-%circle stimuli
+%% Stimulus setup
 
+%shape stimuli
 stimCircle = [0 0 1.7*ppd 1.7*ppd]; % Size of stimuli
 stimRect = [0 0 .85*(1.7*ppd) .85*(1.7*ppd)]; % Size of stimuli
 lineRect = [0 0 1*ppd .06*ppd; 0 0 .06*ppd 1*ppd];
@@ -66,11 +67,13 @@ yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
 fixCoords = [xCoords; yCoords];
 
 %% Timing information
+
 ifi = Screen('GetFlipInterval', expWin);
 topPriorityLevel = MaxPriority(expWin);
 waitframes = 1;
 fixationFrames = round(fixationDuration / ifi); %length of stage in frames
 targFrames = round(targDuration / ifi);
+vbl = Screen('Flip', expWin);
 
 %% Matrix information
 
@@ -113,7 +116,6 @@ for trial=1:length(mixtr)
     %% Present stimuli BEGIN
 
     Priority(topPriorityLevel);
-    vbl = Screen('Flip', expWin);
     curRun.trial(trial).trialNum = trial;
     
     %fixation
@@ -190,5 +192,5 @@ for trial=1:length(mixtr)
     
 end
 
-% Clear the screen
+%clear the screen
 sca;
