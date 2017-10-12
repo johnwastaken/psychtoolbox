@@ -39,7 +39,7 @@ if scrHz > 0
 else
     Screen('Preference', 'SkipSyncTests', 1);
 end
-[expWin,rect] = PsychImaging('OpenWindow', scrID, col.black, [0 0 800 600]);
+[expWin,rect] = PsychImaging('OpenWindow', scrID, col.black);
 Screen('BlendFunction', expWin, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
 %determine resolution and pixels per degree (ppd)
