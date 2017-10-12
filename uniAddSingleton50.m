@@ -21,7 +21,7 @@ targDuration = 2;
 %trial types (n = trpercond x targ x dist)
 trpercond =  4; %trials per condition
 targ = 3; %1=left, 2=right, 3=center
-dist = 2; %1=left, 2=right
+dist = 4; %1=left, 2=right, 3:4=absent
 
 %determine the stim number
 numStim = 10;
@@ -30,6 +30,7 @@ locRight = [1 2 3 4];
 locMid = [5 10];
 
 %% Screen setup
+
 PsychDefaultSetup(2);
 scrID = max(Screen('Screens'));
 scrHz = Screen('FrameRate',scrID);
@@ -50,6 +51,7 @@ ctrX = resVal(1)/2;
 ctrY = resVal(2)/2;
 
 %% Stimulus Setup
+
 %circle stimuli
 stimRect = [0 0 1.7*ppd 1.7*ppd]; % Size of stimuli
 lineRect = [0 0 1*ppd .06*ppd; 0 0 .06*ppd 1*ppd];
@@ -64,11 +66,13 @@ yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
 fixCoords = [xCoords; yCoords];
 
 %% Timing information
+
 ifi = Screen('GetFlipInterval', expWin);
 topPriorityLevel = MaxPriority(expWin);
 waitframes = 1;
 fixationFrames = round(fixationDuration / ifi); %length of stage in frames
 targFrames = round(targDuration / ifi);
+vbl = Screen('Flip', expWin);
 
 %% Matrix information
 
@@ -104,14 +108,25 @@ for trial=1:length(mixtr)
     %set distractor location
     if mixtr(trial,2)==1
         distLoc = randLeftLoc(2);
+        distCol = col.red;
+        distStat = distLoc;
     elseif mixtr(trial,2)==2
         distLoc = randRightLoc(2);
+        distCol = col.red;
+        distStat = distLoc;
+    elseif mixtr(trial,2)==3
+        distLoc = randLeftLoc(2);
+        distCol = col.green;
+        distStat = 0;
+    elseif mixtr(trial,2)==4
+        distLoc = randRightLoc(2);
+        distCol = col.green;
+        distStat = 0;
     end
     
     %% Present stimuli BEGIN
 
     Priority(topPriorityLevel);
-    vbl = Screen('Flip', expWin);
     curRun.trial(trial).trialNum = trial;
     
     %fixation
@@ -154,7 +169,7 @@ for trial=1:length(mixtr)
             Screen('FillRect', expWin, col.grey, allLines(:,a));            
         end
         Screen('DrawLines', expWin, fixCoords, lineWidthPix, col.white, [ctrX ctrY], col.white);
-        Screen('FrameOval', expWin, col.red, allCircs(:,distLoc), circleWidth);
+        Screen('FrameOval', expWin, distCol, allCircs(:,distLoc), circleWidth);
         Screen('FrameOval', expWin, col.gold, allCircs(:,targLoc), circleWidth);
         Screen('DrawingFinished', expWin);
         vbl = Screen('Flip', expWin, vbl + (waitframes - 0.5) * ifi);
@@ -164,11 +179,13 @@ for trial=1:length(mixtr)
     disp(['Trial = ' num2str(trial)]);
     disp(['Target Location = ' num2str(targLoc)]);
     disp(['Line orientation = ' num2str(lineRecord{targLoc})]);    
-    disp(['Distractor Location = ' num2str(distLoc)]);
-    disp(['Line orientation = ' num2str(lineRecord{distLoc})]);
+    disp(['Distractor Location = ' num2str(distStat)]);
+    if mixtr(trial,2)<3
+        disp(['Line orientation = ' num2str(lineRecord{distLoc})]);
+    end
     disp([' ']);
     
 end
 
-% Clear the screen
+%clear the screen
 sca;
