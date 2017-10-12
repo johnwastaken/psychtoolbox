@@ -13,4 +13,4 @@ This is a multidimensional, fixed feature version of the additional singleton ta
 This is a unidimensional, fixed feature version of the additional singleton task with the distractor present on 50% of trials.
 
 # multiAddSingleton50 (added October 11, 2017)
-This is a multidimensional, fixed feature version of the additional singleton task with the distractor present on 500% of trials. 
+This is a multidimensional, fixed feature version of the additional singleton task with the distractor present on 50% of trials. 
